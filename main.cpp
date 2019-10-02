@@ -16,9 +16,10 @@ public:
     int valor_h;
     int valor_f;
     
-    board() 
+    board(std::array<int,9> board_in): ordem(board_in)
     {
         valor_h = calcManhattan();
+        valor_g = 0;
     }
     
     bool operator< (const board & b)const
@@ -53,7 +54,10 @@ public:
         return dist;
     }
     
-    void expande(std::priority_queue<board> &open);
+    void expande(std::priority_queue<board> &open){
+        valor_child_g = valor_g + 1;
+        
+    }
 }
 
 
@@ -94,10 +98,11 @@ int main(int argc, char* argv[])
         if (argv[1] == "-astar"sv || argv[1] == "--help"sv) {
             std::cout << "List of commands:...";
             
-            board inst();
+            array<int,9> bd;            
             for(int i=0; i<9; i++) { 
-                inst.ordem.at(i) = atoi(arg[i+2]));
+                bd.at(i) = atoi(arg[i+2]));
             }
+            board inst(bd);
             calc(inst);
         }
     }
